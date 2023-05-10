@@ -30,6 +30,7 @@ public class PlayManager : MonoBehaviour
     public void OnGoalEnter()
     {
         // Todo show window popup
+        ballController.enabled = false;
         Debug.Log("Goal Popup");
     }
 

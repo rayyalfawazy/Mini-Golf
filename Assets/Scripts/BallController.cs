@@ -8,7 +8,7 @@ public class BallController : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] float force;
-    // [SerializeField] LineRenderer aimLine;
+    [SerializeField] LineRenderer aimLine;
     [SerializeField] Transform aimWorld;
     bool shoot;
     bool shootingMode;
@@ -29,6 +29,7 @@ public class BallController : MonoBehaviour, IPointerDownHandler
             if (clickOncePress) 
             {
                 aimWorld.gameObject.SetActive(true);
+                aimLine.gameObject.SetActive(true);
                 plane = new Plane(Vector3.up, this.transform.position);
             } 
             else if (clickAndHold)
@@ -36,7 +37,6 @@ public class BallController : MonoBehaviour, IPointerDownHandler
                 // Init Variable
                 var mouseViewportPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                 var ballViewportPos = Camera.main.WorldToViewportPoint(this.transform.position);
-                var ballScreenPos = Camera.main.WorldToScreenPoint(this.transform.position);
                 var pointerDirection = ballViewportPos - mouseViewportPos;
                 pointerDirection.z = 0; // Tidak Ada Pointer Direction Z
 
@@ -53,6 +53,17 @@ public class BallController : MonoBehaviour, IPointerDownHandler
                 aimWorld.transform.position = this.transform.position;
                 aimWorld.forward = forceDirection;
                 aimWorld.localScale = new Vector3(1,1,0.5f + forceFactor);
+
+                // Aim visual tail line
+                var ballScreenPos = Camera.main.WorldToScreenPoint(this.transform.position);
+                var mouseScreenPos = Input.mousePosition;
+                ballScreenPos.z = 1f;
+                mouseScreenPos.z = 1f;
+                var positions = new Vector3[] { 
+                    Camera.main.ScreenToWorldPoint(ballScreenPos), 
+                    Camera.main.ScreenToWorldPoint(mouseScreenPos) 
+                };
+                aimLine.SetPositions(positions);
             } 
             else if(clickOnceRelease) 
             {
@@ -60,6 +71,7 @@ public class BallController : MonoBehaviour, IPointerDownHandler
                 
                 shootingMode = false;
                 aimWorld.gameObject.SetActive(false);
+                aimLine.gameObject.SetActive(false);
             }
         }
     }
