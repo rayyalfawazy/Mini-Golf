@@ -86,6 +86,10 @@ public class BallController : MonoBehaviour, IPointerDownHandler
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
+        if (this.IsMove())
+        {
+            return;
+        }
         shootingMode = true;
     }
 }

@@ -7,12 +7,57 @@ public class PlayManager : MonoBehaviour
 {
     [SerializeField] BallController ballController;
     [SerializeField] CameraController cameraController;
+    bool isBallOutside;
+    bool isBallTeleporting;
+    Vector3 lastBallPosition;
 
     private void Update()
     {
+        //Mengambil posisi terakhir bola
+        if (ballController.ShootingMode)
+        {
+            lastBallPosition = ballController.transform.position;
+        }
+
         var inputActive = Input.GetMouseButton(0) && 
             ballController.IsMove()  == false &&
-            ballController.ShootingMode == false;
-        cameraController.SetInputActive(inputActive);
+            ballController.ShootingMode == false &&
+            isBallOutside == false;
+
+        cameraController.SetInputActive(inputActive);   
+    }
+
+    public void OnGoalEnter()
+    {
+        // Todo show window popup
+        Debug.Log("Goal Popup");
+    }
+
+    public void OnBallOutside()
+    {
+        if (!isBallTeleporting)
+        {
+            Invoke("TPBallLastPosition", 1.5f);
+        }
+        ballController.enabled = false;
+        isBallOutside = true;
+        isBallTeleporting = true;
+    }
+
+    public void TPBallLastPosition()
+    {
+        TeleportBall(lastBallPosition);
+    }
+
+    public void TeleportBall(Vector3 targetPosition)
+    {
+        var rb = ballController.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        ballController.transform.position = lastBallPosition;
+        rb.isKinematic = false;
+
+        ballController.enabled = true;
+        isBallOutside = false;
+        isBallTeleporting = false;
     }
 }
