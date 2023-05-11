@@ -1,14 +1,19 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayManager : MonoBehaviour
 {
     [SerializeField] BallController ballController;
     [SerializeField] CameraController cameraController;
+    [SerializeField] TMP_Text shootCounterText;
+
+    
     bool isBallOutside;
     bool isBallTeleporting;
+    bool isGetScore;
     Vector3 lastBallPosition;
 
     private void Update()
@@ -19,10 +24,23 @@ public class PlayManager : MonoBehaviour
             lastBallPosition = ballController.transform.position;
         }
 
+        shootCounterText.text = $"Shot Counted : {ballController.GetShots}";
+
+        if (!ballController.IsMove())
+        {
+            isGetScore = true;
+            if (isGetScore)
+            {
+                Debug.Log($"Ball Moving {ballController.IsMove()} & Get Score {isGetScore}");
+                isGetScore = false;
+            }
+        }
+
+
         var inputActive = Input.GetMouseButton(0) && 
-            ballController.IsMove()  == false &&
-            ballController.ShootingMode == false &&
-            isBallOutside == false;
+        ballController.IsMove()  == false &&
+        ballController.ShootingMode == false &&
+        isBallOutside == false;
 
         cameraController.SetInputActive(inputActive);   
     }

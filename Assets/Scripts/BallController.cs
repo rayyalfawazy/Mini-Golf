@@ -10,13 +10,16 @@ public class BallController : MonoBehaviour, IPointerDownHandler
     [SerializeField] float force;
     [SerializeField] LineRenderer aimLine;
     [SerializeField] Transform aimWorld;
+
+    int shots = 0;
+    float forceFactor;
     bool shoot;
     bool shootingMode;
-    float forceFactor;
-    Vector3 forceDirection;
     public bool ShootingMode {get => shootingMode;}
+    public int GetShots { get => shots; }
     Ray ray;
     Plane plane;
+    Vector3 forceDirection;
 
     void Update()
     {
@@ -67,8 +70,8 @@ public class BallController : MonoBehaviour, IPointerDownHandler
             } 
             else if(clickOnceRelease) 
             {
+                shots += 1;
                 shoot = true;
-                
                 shootingMode = false;
                 aimWorld.gameObject.SetActive(false);
                 aimLine.gameObject.SetActive(false);
