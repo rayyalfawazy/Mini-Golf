@@ -11,17 +11,20 @@ public class BarAnimation : MonoBehaviour
     void Start()
     {
         var sequence = DOTween.Sequence().SetLoops(-1);
-
+        transform.DORotate(new Vector3(0, 360.0f), 3.0f)
+            .SetLoops(-1)
+            .SetRelative()
+            .SetEase(Ease.Linear);
         sequence.Append
             (
-            transform.DOScale(new Vector3(-scaleLimitX, 0, 0), duration)
+            transform.DOScaleX(scaleLimitX, duration)
                 .SetRelative()
                 .SetEase(Ease.Linear)
             );
 
         sequence.Append
             (
-            transform.DOScale(new Vector3(-scaleLimitX,0,0), duration)
+            transform.DOScaleX(-scaleLimitX, duration)
                 .SetRelative()
                 .SetEase(Ease.Linear)
             );

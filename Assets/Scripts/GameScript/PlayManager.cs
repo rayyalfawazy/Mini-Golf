@@ -15,11 +15,6 @@ public class PlayManager : MonoBehaviour
     bool isBallTeleporting;
     Vector3 lastBallPosition;
 
-    private void Start()
-    {
-        //Debug.Log(SceneManager.);
-    }
-
     private void Update()
     {
         //Mengambil posisi terakhir bola

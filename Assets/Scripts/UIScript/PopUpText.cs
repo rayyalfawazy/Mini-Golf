@@ -18,6 +18,9 @@ public class PopUpText : MonoBehaviour
 
     public void NextScene()
     {
-        SceneManager.LoadScene(nextScene);
+        if (nextScene != "") 
+        {
+            SceneManager.LoadScene(nextScene);
+        }
     }
 }
