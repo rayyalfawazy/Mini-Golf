@@ -23,4 +23,9 @@ public class PopUpText : MonoBehaviour
             SceneManager.LoadScene(nextScene);
         }
     }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }

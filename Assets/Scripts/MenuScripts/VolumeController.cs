@@ -40,7 +40,7 @@ public class VolumeController : MonoBehaviour
     public void SetUIVolume()
     {
         //Adjust Volume By Slider
-        float UIVolume = Mathf.Log10(SFXSlider.value) * 20; // Mengikuti Metode Volume Mixer yang Logarithmic
+        float UIVolume = Mathf.Log10(UISlider.value) * 20; // Mengikuti Metode Volume Mixer yang Logarithmic
         audioMixer.SetFloat("ui_vol", UIVolume);
 
         //Save Slider Value by PlayerPref
