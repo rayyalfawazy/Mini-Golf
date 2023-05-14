@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 3.unity
     guid: a0eaa2010ebe4c8428be59461c357ea0
+  - enabled: 1
+    path: Assets/Scenes/EndCardCredit.unity
+    guid: a864845dad1d4594ca0bd597ac44d461
   m_configObjects: {}
